@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Matching Question Maker — PWA</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2b2f3a">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Matching Question Maker</h1>
+    <nav>
+      <button id="btn-theme">🎨 Theme</button>
+      <button id="btn-teacher" class="active">🧑‍🏫 Teacher (Create)</button>
+      <button id="btn-student">🎮 Student (Play)</button>
+      <button id="btn-leaderboard">🏆 Leaderboard</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="teacher" class="panel">
+        <h2>Create a Matching Set</h2>
+        <div class="row">
+          <label for="column-count">Columns</label>
+          <select id="column-count">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+          <input id="set-name" placeholder="Set name (e.g. Animals)" />
+        </div>
+
+        <div id="cols-inputs" class="row inputs">
+          <!-- JS will render column inputs here -->
+        </div>
+        <div class="row">
+          <button id="add-row">Add Row</button>
+        </div>
+
+        <ul id="pairs-list" class="pairs"></ul>
+
+        <div class="row">
+          <button id="save-set">Save Set</button>
+          <button id="export-set">Export CSV</button>
+          <input id="import-file" type="file" accept="application/json,text/csv,application/csv" />
+        </div>
+
+      <h3>Saved Sets</h3>
+      <ul id="saved-sets"></ul>
+    </section>
+
+    <section id="student" class="panel hidden">
+      <h2>Play Matching Quiz</h2>
+        <div class="row">
+          <label for="choose-set">Choose set</label>
+          <select id="choose-set"></select>
+          <label for="multiplayer-mode">Mode</label>
+          <select id="multiplayer-mode">
+            <option value="single">Single</option>
+            <option value="broadcast">Multiplayer (Local Tabs)</option>
+            <option value="websocket">Multiplayer (WebSocket)</option>
+            <option value="bluetooth">Multiplayer (Bluetooth)</option>
+          </select>
+          <input id="ws-url" placeholder="wss://server.example:1234 (for WebSocket)" style="display:none;width:240px" />
+          <button id="btn-bluetooth" style="display:none">Connect Bluetooth</button>
+          <button id="start-quiz">Start</button>
+      </div>
+
+        <div class="row">
+          <label for="timer-seconds">Timer (seconds)</label>
+          <input id="timer-seconds" type="number" min="0" placeholder="0 (off)" style="width:100px" />
+          <span id="timer-display" style="margin-left:12px;font-weight:bold"></span>
+        </div>
+
+      <div class="row">
+        <label for="player-name">Player name</label>
+        <input id="player-name" placeholder="Your name" />
+      </div>
+
+      <div class="row">
+        <label for="bg-image-file">Play-time background image</label>
+        <input id="bg-image-file" type="file" accept="image/*" />
+        <label for="bg-music-file">Play-time background music</label>
+        <input id="bg-music-file" type="file" accept="audio/*" />
+      </div>
+
+      <div id="quiz-area" class="hidden">
+        <div id="columns-wrapper" class="columns-wrapper"></div>
+        <div class="controls">
+          <button id="check-answers">Check Answers</button>
+          <button id="restart-quiz">Restart</button>
+        </div>
+        <div id="result"></div>
+      </div>
+    </section>
+
+    <section id="leaderboard" class="panel hidden">
+      <h2>Leaderboard</h2>
+      <div class="row">
+        <button id="clear-leaderboard">Clear List</button>
+      </div>
+      <ol id="leaderboard-list-main"></ol>
+    </section>
+  </main>
+
+  <img id="bg-gif-keepalive" alt="" aria-hidden="true" />
+
+  <section id="end-screen" class="hidden end-screen">
+    <div class="end-card">
+      <h1 id="end-player-name"></h1>
+      <p id="end-score"></p>
+      <h3>Leaderboard</h3>
+      <ol id="leaderboard-list-end"></ol>
+      <button id="close-end-screen">Close</button>
+    </div>
+  </section>
+
+  <div id="conn-status" class="conn conn-online">Online</div>
+  <div id="update-toast" class="toast hidden" role="status" aria-live="polite">
+    <span>New version available</span>
+    <div class="toast-actions">
+      <button id="toast-reload">Reload</button>
+      <button id="toast-dismiss" class="ghost">Later</button>
+    </div>
+  </div>
+
+  <footer>
+    <small>Created by Ambassador Tr. Nasim (+8801700770847)</small>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
